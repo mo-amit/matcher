@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.amitco'
+version = '0.0.1-SNAPSHOT'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
+//    implementation 'com.fasterxml.jackson.core:jackson-databind'
+//    implementation 'org.apache.activemq:activemq-broker'
+    //CSV
+    implementation 'com.opencsv:opencsv:5.0'
+    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    // Dynamo DB
+    implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
+    // Utils
+    implementation 'com.google.code.gson:gson:2.8.5'
+    // Security
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+    // OKTA
+//    implementation 'com.okta.spring:okta-spring-boot-starter:2.1.4'
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
