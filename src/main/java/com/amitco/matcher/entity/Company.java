@@ -1,4 +1,4 @@
-package com.amitco.ciroproject.entity;
+package com.amitco.matcher.entity;
 
 import java.util.List;
 import lombok.Data;

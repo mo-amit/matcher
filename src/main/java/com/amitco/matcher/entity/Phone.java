@@ -1,7 +1,7 @@
-package com.amitco.ciroproject.entity;
+package com.amitco.matcher.entity;
 
-import com.amitco.ciroproject.utils.StringUtils;
-import java.util.Locale;
+import com.amitco.matcher.utils.StringUtils;
+import java.util.Objects;
 import lombok.Data;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 

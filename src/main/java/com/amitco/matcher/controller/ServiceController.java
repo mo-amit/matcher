@@ -1,9 +1,8 @@
-package com.amitco.ciroproject.controller;
+package com.amitco.matcher.controller;
 
-import com.amitco.ciroproject.dto.CompanyWithScorePOJO;
-import com.amitco.ciroproject.dto.FindMatchCriteria;
-import com.amitco.ciroproject.entity.Company;
-import com.amitco.ciroproject.service.DisambiguationService;
+import com.amitco.matcher.dto.CompanyWithScorePOJO;
+import com.amitco.matcher.dto.FindMatchCriteria;
+import com.amitco.matcher.service.DisambiguationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

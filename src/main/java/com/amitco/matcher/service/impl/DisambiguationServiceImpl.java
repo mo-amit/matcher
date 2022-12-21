@@ -1,11 +1,11 @@
-package com.amitco.ciroproject.service.impl;
+package com.amitco.matcher.service.impl;
 
-import com.amitco.ciroproject.dto.CompanyWithScorePOJO;
-import com.amitco.ciroproject.entity.Address;
-import com.amitco.ciroproject.entity.Company;
-import com.amitco.ciroproject.entity.Phone;
-import com.amitco.ciroproject.service.DisambiguationService;
-import com.amitco.ciroproject.utils.StringUtils;
+import com.amitco.matcher.dto.CompanyWithScorePOJO;
+import com.amitco.matcher.entity.Address;
+import com.amitco.matcher.entity.Company;
+import com.amitco.matcher.entity.Phone;
+import com.amitco.matcher.service.DisambiguationService;
+import com.amitco.matcher.utils.StringUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,14 +72,14 @@ public class DisambiguationServiceImpl implements DisambiguationService {
         loadData();
       }
 
-    float companyNameDistance = -1;
-    float phoneDistance = -1;
-    float addressNameDistance = -1;
+    float companyNameDistance;
+    float phoneDistance;
+    float addressNameDistance;
 
     double minScore = -1;
     Company companyWithMinScore = null;
 
-    for (int i = 0; i < companyList.size(); i++) {
+    for (Company company : companyList) {
 
       phoneDistance = -1;
       addressNameDistance = -1;
@@ -88,24 +87,24 @@ public class DisambiguationServiceImpl implements DisambiguationService {
       companyNameDistance =
           LevenshteinDistance.getDefaultInstance().apply(
               StringUtils.cleanString(inCompanyName),
-              StringUtils.cleanString((companyList.get(i)).getCompany_name()));
-      for (Address address : companyList.get(i).getAddressList()) {
+              StringUtils.cleanString(company.getCompany_name()));
+      for (Address address : company.getAddressList()) {
         float tmpAddressDistance = address.calculateDistance(inAddress);
-        if(addressNameDistance == -1 || tmpAddressDistance < addressNameDistance)
-             addressNameDistance = tmpAddressDistance;
+        if (addressNameDistance == -1 || tmpAddressDistance < addressNameDistance)
+          addressNameDistance = tmpAddressDistance;
       }
-      for (Phone phone : companyList.get(i).getPhoneList()) {
-        float tmpPhoneDistance =  phone.calculateDistance(inPhoneNumber);
-         if (phoneDistance  == -1 || tmpPhoneDistance < phoneDistance)
-               phoneDistance = tmpPhoneDistance;
+      for (Phone phone : company.getPhoneList()) {
+        float tmpPhoneDistance = phone.calculateDistance(inPhoneNumber);
+        if (phoneDistance == -1 || tmpPhoneDistance < phoneDistance)
+          phoneDistance = tmpPhoneDistance;
       }
-      double  combinedScore = (companyNameDistance*companyNameEffectiveWeight)
-                  + (phoneDistance* phoneNumberEffectiveWeight )
-                  + (addressNameDistance * addressNameEffectiveWeight);
+      double combinedScore = (companyNameDistance * companyNameEffectiveWeight)
+          + (phoneDistance * phoneNumberEffectiveWeight)
+          + (addressNameDistance * addressNameEffectiveWeight);
 
-      if ( minScore == -1 || combinedScore <= minScore){
+      if (minScore == -1 || combinedScore <= minScore) {
         minScore = combinedScore;
-        companyWithMinScore = companyList.get(i);
+        companyWithMinScore = company;
 
       }
 
@@ -129,18 +128,16 @@ public class DisambiguationServiceImpl implements DisambiguationService {
   public void loadData() throws IOException {
     ObjectMapper objectMapper = new ObjectMapper();
 
-    File companyListFile = null;
-    File addressListFile = null;
-    File phonenumberListFile = null;
+    File companyListFile, addressListFile, phoneNumberListFile;
 
     try {
       companyListFile = companyReourceFile.getFile();
       addressListFile = addressReourceFile.getFile();
-      phonenumberListFile = phoneNumberReourceFile.getFile();
+      phoneNumberListFile = phoneNumberReourceFile.getFile();
 
       companyList = objectMapper.readValue(companyListFile, new TypeReference<List<Company>>(){});
       addressList = objectMapper.readValue(addressListFile, new TypeReference<List<Address>>(){});
-      phoneList = objectMapper.readValue(phonenumberListFile, new TypeReference<List<Phone>>(){});
+      phoneList = objectMapper.readValue(phoneNumberListFile, new TypeReference<List<Phone>>(){});
 
 
       HashMap<String, List<Address>> addressMap = new HashMap<>(addressList.size());

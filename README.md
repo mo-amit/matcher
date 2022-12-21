@@ -1,3 +1,11 @@
+Overview 
+
+It's a simple application 
+
+1. Parses and loads data in memory from json files located in `sr/main/resources directory`
+2. Exposes an API to take fragments of address as an input and find the closest "fuzzy-matched" address if it finds any. It also returns the confidence level of the address it returns. 
+
+
 1. Running the application 
 
  After downloading the git repo. Go to termninal and change directory to the project's root. 

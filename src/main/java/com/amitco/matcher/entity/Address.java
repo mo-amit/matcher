@@ -1,10 +1,7 @@
-package com.amitco.ciroproject.entity;
+package com.amitco.matcher.entity;
 
-import com.amitco.ciroproject.utils.StringUtils;
-import java.util.ArrayList;
+import com.amitco.matcher.utils.StringUtils;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -95,8 +92,8 @@ public class Address {
     String cleanInputString = StringUtils.cleanString(address);
 
     float minDistance = -1;
-    float currentDistance = -1;
-    float currentWeightedDistance = -1 ;
+    float currentDistance;
+    float currentWeightedDistance;
     for (String combinedAddress : cleanCombinedAddresses) {
       currentDistance = LevenshteinDistance.getDefaultInstance().apply(combinedAddress, cleanInputString);
       if( cleanInputString.length() !=0 ){

@@ -1,4 +1,4 @@
-package com.amitco.ciroproject.dto;
+package com.amitco.matcher.dto;
 
 import lombok.Data;
 

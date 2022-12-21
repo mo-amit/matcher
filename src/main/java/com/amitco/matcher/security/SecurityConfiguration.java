@@ -1,4 +1,4 @@
-package com.amitco.ciroproject.security;
+package com.amitco.matcher.security;
 
 import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
@@ -70,17 +70,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private CorsConfigurationSource getCorsConfigurationSource(){
 
-      return new CorsConfigurationSource() {
-        @Override
-        public CorsConfiguration getCorsConfiguration(HttpServletRequest httpServletRequest) {
-          CorsConfiguration corsConfiguration = new CorsConfiguration();
-          corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
-          corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
-          corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
-          corsConfiguration.setAllowCredentials(true);
-          corsConfiguration.setMaxAge(3600L);
-          return corsConfiguration;
-        }
+      return httpServletRequest -> {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
+        corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setMaxAge(3600L);
+        return corsConfiguration;
       };
   }
 

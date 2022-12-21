@@ -1,6 +1,6 @@
-package com.amitco.ciroproject.dto;
+package com.amitco.matcher.dto;
 
-import com.amitco.ciroproject.entity.Company;
+import com.amitco.matcher.entity.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
